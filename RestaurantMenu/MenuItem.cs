@@ -8,8 +8,7 @@ namespace RestaurantMenu
     {
         private string category;
         private double price;
-        private readonly List<string> choices = new List<string> { "appetizer", "dessert", "main course" };
-        
+                
         public bool NewItem { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -30,7 +29,7 @@ namespace RestaurantMenu
             get { return category; }
             set
             {
-                if(this.choices.Contains(value.ToLower()))
+                if(Menu.ItemCategories.Contains(value.ToLower()))
                 {
                     category = value;
                 } else
@@ -41,5 +40,20 @@ namespace RestaurantMenu
             }
         }
 
+        public override string ToString()
+        {
+            return $"{Name} / {Description} / {Price.ToString("C2")} {(NewItem ? "/ New Item!" : "")}";
+        }
+        public override bool Equals(object obj)
+        {
+            return obj is MenuItem item &&
+                   Name == item.Name &&
+                   Category == item.Category;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name, Category);
+        }
     }
 }
