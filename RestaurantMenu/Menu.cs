@@ -11,6 +11,11 @@ namespace RestaurantMenu
         private DateTime updated = DateTime.Now;
         public static List<string> ItemCategories = new List<string>{ "appetizer", "main course", "dessert" };
         
+        public void AddMenuItem(MenuItem item)
+        {
+            menu.Add(item);
+        }
+
         public void AddMenuItem()
         {
             MenuItem newItem = new MenuItem();
@@ -54,9 +59,12 @@ namespace RestaurantMenu
                 Console.Write("Item won't be added, it already exists in the menu as a {0}:  \"{1}\"\n", menu[menu.IndexOf(newItem)].Category, menu[menu.IndexOf(newItem)].ToString());
             } else
             {
+                newItem.NewItem = true;
                 menu.Add(newItem);
                 Console.WriteLine("Adding the item: {0}", newItem.ToString());
-            } 
+            }
+
+            updated = DateTime.Now;
 
         }
 
@@ -71,6 +79,7 @@ namespace RestaurantMenu
                 {
                     menu.Remove(item);
                     Console.WriteLine("Removing the following item: {0}", item.ToString());
+                    updated = DateTime.Now;
                     return;
                 }
             }
@@ -115,6 +124,7 @@ namespace RestaurantMenu
             menuString.Append(delim).Append(ItemCategories[0]).Append("\n").Append(delim).Append(appetizers);
             menuString.Append(delim).Append(ItemCategories[1]).Append("\n").Append(delim).Append(mains);
             menuString.Append(delim).Append(ItemCategories[2]).Append("\n").Append(delim).Append(desserts);
+            menuString.Append(delim).Append("Last Updated: ").Append(updated).Append("\n");
             return menuString.ToString();
         }
 
